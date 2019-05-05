@@ -15,7 +15,7 @@ const PersonagensNavigator = createMaterialTopTabNavigator(
         showLabel: false,
         showIcon: true,
         pressColor: '#f5898d',
-        indicatorStyle: {backgroundColor: '#f5898d', height: 3, alignContent: 'center'},
+        indicatorStyle: {backgroundColor: '#f5898d', height: 3},
         style: {
             backgroundColor: '#a50d12',
             height: 55

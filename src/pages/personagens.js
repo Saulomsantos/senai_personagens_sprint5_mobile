@@ -13,7 +13,7 @@ class Personagens extends Component {
     }
 
     static navigationOptions = {
-        tabBarIcon: ({ tintColor }) => (
+        tabBarIcon: () => (
             <Image
                 source={require('../assets/imgs/avengers2.png')}
                 style={styles.tabNavigatorIconHome}
@@ -31,30 +31,28 @@ class Personagens extends Component {
         const dadosDaApi = resposta.data;
         this.setState({ listaPersonagens : dadosDaApi });
     }
-
-
-
+    
     render() {
         return (
             <View style={styles.Personagens}>
                 {/* Cabecalho - header */}
                 <View style={styles.PersonagensHeader}>
-                <View style={styles.PersonagensHeaderRow}>
-                    <Image
-                    source={require("../assets/imgs/avengers2.png")}
-                    style={styles.PersonagensHeaderImg}
-                    />
-                    <Text style={styles.PersonagensHeaderText}>{"Personagens".toUpperCase()}</Text>
-                </View>
-                <View style={styles.PersonagensHeaderLine} />
+                  <View style={styles.PersonagensHeaderRow}>
+                      <Image
+                      source={require("../assets/imgs/avengers2.png")}
+                      style={styles.PersonagensHeaderImg}
+                      />
+                      <Text style={styles.PersonagensHeaderText}>{"Personagens".toUpperCase()}</Text>
+                  </View>
+                  <View style={styles.PersonagensHeaderLine} />
                 </View>
 
-                {/* conteudo - body - section */}
+                {/* conteudo - body */}
                 <View style={styles.PersonagensBody}>
                 <FlatList
                     contentContainerStyle={styles.PersonagensBodyConteudo}
                     data={this.state.listaPersonagens}
-                    keyExtractor={item => item.id}
+                    keyExtractor={item => item.id.toString()}
                     renderItem={this.renderizaItem}
                 />
                 </View>
@@ -63,12 +61,14 @@ class Personagens extends Component {
     }
 
     renderizaItem = ({ item }) => (
-        // <Text style={{ fontSize: 20, color: 'red' }}>{item.titulo}</Text>
         <View>
           <View style={styles.flatItemContainer}>
-            <Text>{item.id}</Text>
-            <Text>{item.nome}</Text>
-            <Text>{item.lancamento}</Text>
+            <Text style={styles.flatItemTitulo}>{item.id} - {item.nome}</Text>
+            <Text style={styles.flatItemLancamento}>{item.lancamento}</Text>
+            <Image
+              source={{uri: item.urlImagem}}
+              style={styles.flatItemImg}
+            />            
           </View>
         </View>
       );
@@ -78,10 +78,9 @@ const styles = StyleSheet.create({
     tabNavigatorIconHome: {
       width: 25,
       height: 25,
-      // tintColor: "purple"
       tintColor: "#FFFFFF"
     },
-    // conteúdo da Personagens
+    // conteúdo do container Personagens
     Personagens: {
       flex: 1,
       backgroundColor: "#F1F1F1"
@@ -105,7 +104,7 @@ const styles = StyleSheet.create({
     },
     // texto do cabecalho
     PersonagensHeaderText: {
-      fontSize: 16,
+      fontSize: 18,
       letterSpacing: 5,
       color: "#999999",
       fontFamily: "OpenSans-Regular"
@@ -124,40 +123,37 @@ const styles = StyleSheet.create({
     },
     // conteúdo da lista
     PersonagensBodyConteudo: {
-      paddingTop: 30,
+      paddingTop: 20,
       paddingRight: 50,
       paddingLeft: 50
     },
-    // dados do evento de cada item da linha
-    flatItemLinha: {
+    // dados do personagem de cada item da linha
+    flatItemTitulo: {
       flexDirection: "row",
       borderBottomWidth: 0.9,
-      borderBottomColor: "gray"
+      borderBottomColor: "gray",
+      color: "black",
+      fontSize: 16,
+      fontWeight: "900",
     },
     flatItemContainer: {
-      flex: 7,
-      marginTop: 1
+      marginTop: 15
     },
-    flatItemTitulo: {
+    flatItemLancamento: {
       fontSize: 14,
       color: "#333",
-      fontFamily: "OpenSans-Light"
-    },
-    flatItemData: {
-      fontSize: 10,
-      color: "#999",
-      lineHeight: 24
+      fontFamily: "OpenSans-Light",
+      marginTop: 7
     },
     flatItemImg: {
       justifyContent: "center",
       alignContent: "center",
-      alignItems: "center"
+      alignItems: "center",
+      alignSelf: "center",
+      width: 200,
+      height: 200,
+      margin: 20
     },
-    flatItemImgIcon: {
-      width: 22,
-      height: 22,
-      tintColor: "#B727FF"
-    }
 });
 
 export default Personagens;
